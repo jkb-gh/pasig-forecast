@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thesis Revision Checklist</title>
+<style>
+:root{
+  --bg:#f7f7f5; --card:#ffffff; --text:#1d1d1f; --muted:#5f6368; --line:#dcdcd8;
+  --accent:#1f5fa8; --err:#b3261e; --errbg:#fdecea; --con:#8a5a00; --conbg:#fff4dc;
+  --fmt:#3d5a80; --fmtbg:#e8eef7; --opt:#2e7d32; --optbg:#e8f5e9;
+  --findbg:#fbeaea; --repbg:#e9f6ec; --code:#f1f1ee;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16171a; --card:#1f2024; --text:#e8e8ea; --muted:#a3a7ad; --line:#34363b;
+    --accent:#7fb0ef; --err:#f28b82; --errbg:#3a2222; --con:#f0c36a; --conbg:#3a3020;
+    --fmt:#9db8e0; --fmtbg:#24304a; --opt:#81c995; --optbg:#1f3324;
+    --findbg:#3a2526; --repbg:#1f3326; --code:#2a2c31;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16171a; --card:#1f2024; --text:#e8e8ea; --muted:#a3a7ad; --line:#34363b;
+  --accent:#7fb0ef; --err:#f28b82; --errbg:#3a2222; --con:#f0c36a; --conbg:#3a3020;
+  --fmt:#9db8e0; --fmtbg:#24304a; --opt:#81c995; --optbg:#1f3324;
+  --findbg:#3a2526; --repbg:#1f3326; --code:#2a2c31;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:920px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:1.7rem;margin:0 0 4px}
+h2{font-size:1.25rem;margin:36px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+p.sub{color:var(--muted);margin:0 0 16px}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.prog{flex:1;min-width:160px;height:10px;background:var(--line);border-radius:6px;overflow:hidden}
+.prog>div{height:100%;width:0;background:var(--accent);transition:width .2s}
+.bar label{color:var(--muted);font-size:.9rem;display:flex;gap:6px;align-items:center}
+.legend{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border-radius:4px;white-space:nowrap}
+.t-err{color:var(--err);background:var(--errbg)}
+.t-con{color:var(--con);background:var(--conbg)}
+.t-fmt{color:var(--fmt);background:var(--fmtbg)}
+.t-opt{color:var(--opt);background:var(--optbg)}
+.item{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:10px 0;display:grid;grid-template-columns:28px 1fr;gap:6px 10px}
+.item.done{opacity:.55}
+.item input[type=checkbox]{width:20px;height:20px;margin:3px 0 0;accent-color:var(--accent)}
+.head{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.head b{font-weight:650}
+.loc{color:var(--muted);font-size:.88rem}
+.body{grid-column:2}
+.body p{margin:6px 0}
+.lbl{font-size:.75rem;font-weight:700;text-transform:uppercase;color:var(--muted);margin-top:8px}
+.find,.rep{position:relative;border-radius:6px;padding:8px 10px;margin:3px 0;white-space:pre-wrap;word-break:break-word;font-family:Georgia,"Times New Roman",serif;font-size:.97rem}
+.find{background:var(--findbg)}
+.rep{background:var(--repbg);padding-right:64px}
+.copy{position:absolute;top:6px;right:6px;font:600 .75rem system-ui,sans-serif;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:4px;padding:3px 8px;cursor:pointer}
+.why{color:var(--muted);font-size:.9rem}
+table{border-collapse:collapse;width:100%;font-size:.92rem;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+th{background:var(--code)}
+.tw{overflow-x:auto}
+code{background:var(--code);padding:1px 5px;border-radius:3px;font-size:.88em}
+.note{background:var(--card);border-left:4px solid var(--accent);padding:10px 14px;border-radius:4px;margin:12px 0}
+ol.steps{margin:6px 0 0 0;padding-left:22px}
+@media (max-width:560px){.item{grid-template-columns:24px 1fr;padding:10px}.rep{padding-right:10px;padding-top:30px}}
+@media print{.bar,.copy{display:none}.item{break-inside:avoid}}
+</style>
+</head>
+<body>
+<main>
+<h1>Thesis Revision Checklist</h1>
+<p class="sub">Every change still needed in <i>Thesis Chapters 1-5.pdf</i>, in page order. Page numbers are the printed numbers at the top right of each page (Chapter I starts on p. 1). All numbers in Chapter IV were checked against the results files in <code>reports/chapter4/</code>.</p>
+
+<div class="bar">
+  <div class="prog" aria-hidden="true"><div id="progfill"></div></div>
+  <span id="progtxt">0 done</span>
+  <label><input type="checkbox" id="hide"> Hide done</label>
+</div>
+<div class="legend">
+  <span class="tag t-err">Error</span><span class="loc">wrong number or label; must fix</span>
+  <span class="tag t-con">Consistency</span><span class="loc">text contradicts another part</span>
+  <span class="tag t-fmt">Format</span><span class="loc">template or layout</span>
+  <span class="tag t-opt">Optional</span><span class="loc">recommended, only if true</span>
+</div>
+
+<div class="note"><b>Order of work.</b>
+<ol class="steps">
+<li>Fix the content items (sections 2 to 6).</li>
+<li>Move the Chapter IV table captions and renumber the figures (section 4).</li>
+<li>Add the front matter (section 1).</li>
+<li>Regenerate the Table of Contents and the Lists of Figures and Tables <b>last</b>, because the steps before it move pages.</li>
+</ol></div>
+
+<!-- ================= 1 FRONT MATTER ================= -->
+<h2>1. Title page, front matter and Table of Contents</h2>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-con">Consistency</span><b>Middle initials on the title page</b><span class="loc">Title page</span></div>
+<p>Two names lack the middle initial that the ethics forms (4.2, 4.3, 4.5) use. Confirm the initials, then make all four documents match.</p>
+<div class="lbl">Find</div><div class="find">Baltazar, Joseph Keem
+Serrano, Julia Clarisse</div>
+<div class="lbl">Replace with</div><div class="rep">Baltazar, Joseph Keem C.
+Serrano, Julia Clarisse M.</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>Missing front matter</b><span class="loc">between the title page and the Table of Contents</span></div>
+<p>The manuscript goes straight from the title page to the Table of Contents. The Thesis Template requires, in this order: Approval Sheet, Certificate of Authenticity and Originality, Acknowledgment, Abstract, Table of Contents, List of Figures, List of Tables.</p>
+<div class="lbl">Abstract (97 words; the template allows 50–100)</div>
+<div class="rep">This study developed a Granger-Selected Hybrid LSTM-GRU and Tabular Neural Network that forecasts the hourly Pasig River level at the MMDA EFCOS Pandacan station 1 to 6 hours ahead as a flood-risk indicator for Sampaloc, Manila. Using MMDA and PAGASA records from 2018 to 2024, the river level was linked to drainage stress at the Aviles pumping station, and rainfall and pressure were selected by Granger tests. On the 2024 test season, the model's RMSE was 0.052 to 0.095 m, significantly lower than tide-based and persistence forecasts but not than ridge regression, and it under-forecast flood-risk peaks.</div>
+<p class="why">If you edit the abstract, recount the words.</p>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>Table of Contents: wrong Chapter III page numbers</b><span class="loc">p. 2</span></div>
+<div class="tw"><table>
+<tr><th>Entry</th><th>TOC says</th><th>Actually starts on</th></tr>
+<tr><td>Table III.5: Ablation Variants</td><td>59</td><td><b>60</b></td></tr>
+<tr><td>D. Research Instruments</td><td>60</td><td><b>61</b></td></tr>
+<tr><td>E. Sampling and Data Gathering Procedure</td><td>61</td><td><b>63</b></td></tr>
+<tr><td>Table III.6: Hours, Forecast Cases and Alert Events per Partition (Wet Seasons)</td><td>63</td><td><b>64</b></td></tr>
+<tr><td>F. Statistical Treatment of the Data</td><td>64</td><td><b>65</b></td></tr>
+<tr><td>G. Ethical Consideration</td><td>69</td><td><b>70</b></td></tr>
+<tr><td>References</td><td>70</td><td><b>110</b></td></tr>
+</table></div>
+<p class="why">Every other Chapter I–III entry is correct. If the TOC is automatic, update the whole table instead (Word: right-click → Update Field → Update entire table; Google Docs: click the TOC → refresh).</p>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>Table of Contents: add Chapters IV–V and Appendix H</b><span class="loc">p. 2</span></div>
+<p>Current page numbers are shown. They will move after the caption changes in section 4, so take the final numbers from the regenerated TOC.</p>
+<div class="tw"><table>
+<tr><th>Entry</th><th>Current page</th></tr>
+<tr><td><b>Chapter IV Presentation and Analysis of Data</b></td><td>72</td></tr>
+<tr><td>A. System Architecture</td><td>72</td></tr>
+<tr><td>B. Description of the Modules and Interfaces</td><td>73</td></tr>
+<tr><td>C. Sample System Simulation of Test Data</td><td>76</td></tr>
+<tr><td>D. Test Results</td><td>78</td></tr>
+<tr><td>E. Analysis and Interpretation of the Results</td><td>99</td></tr>
+<tr><td><b>Chapter V Summary, Conclusions and Recommendations</b></td><td>104</td></tr>
+<tr><td>A. Summary</td><td>104</td></tr>
+<tr><td>B. Conclusions</td><td>105</td></tr>
+<tr><td>C. Recommendations</td><td>107</td></tr>
+<tr><td>References</td><td>110</td></tr>
+<tr><td>Appendix H: Critical Source Code and Test Scripts</td><td>126</td></tr>
+</table></div>
+<p class="why">The template also requires the Curriculum Vitae of each member after the appendices.</p>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>Add a List of Figures and a List of Tables</b><span class="loc">after the Table of Contents</span></div>
+<p>Use these titles. They already include the renumbering from section 4. Fill in the page numbers last.</p>
+<div class="lbl">List of Figures</div>
+<div class="rep">Figure I.1: Theoretical Framework Diagram
+Figure I.2: Conceptual Framework Diagram
+Figure III.1: Architecture of the Granger-Selected Hybrid LSTM-GRU and Tabular Neural Network
+Figure IV.1: System Architecture of the Forecasting Pipeline
+Figure IV.2: Test RMSE by Lead Time, 2024
+Figure IV.3: Observed Pandacan Level and 3-Hour Forecasts of the Proposed Model and the Tide Plus Persisted Residual Model, 2024 Wet Season
+Figure IV.4: Walk-Forward RMSE by Evaluation Year
+Figure IV.5: Ablation Results, Change in RMSE against the Proposed Model
+Figure IV.6: Observed Level and Forecasts of the Proposed Model at 1, 3 and 6 Hours, 22–26 July 2024 (Carina)</div>
+<div class="lbl">List of Tables</div>
+<div class="rep">Table II.1: Synthesis of Related Studies
+Table III.1: Datasets Used in the Study
+Table III.2: Candidate Input Features
+Table III.3: Hyperparameter Settings and Search Ranges
+Table III.4: Baseline Models
+Table III.5: Ablation Variants
+Table III.6: Hours, Forecast Cases and Alert Events per Partition (Wet Seasons)
+Table IV.1: Forecasts Issued at 05:00 PHT on 24 July 2024 (Pandacan Level, m)
+Table IV.2: Association between the Pandacan Level and Drainage Stress (Training Seasons 2018–2022)
+Table IV.3: Flood-Risk Level under Other Definitions of Drainage Stress (Training Seasons)
+Table IV.4: Granger Causality Tests on the De-tided Pandacan Level (Training Seasons)
+Table IV.5: Settings Chosen on the 2023 Validation Season
+Table IV.6: Test RMSE (m) by Lead Time, All Hours, 2024
+Table IV.7: Test RMSE (m) in Rainy and Dry Hours at 1, 3 and 6 Hours, 2024
+Table IV.8: Test MAE (m), R² and Skill at 1, 3 and 6 Hours, All Hours, 2024
+Table IV.9: Diebold–Mariano Tests, Proposed Model vs Each Baseline
+Table IV.10: Hourly High-Water Alerts, All Hours, 2024
+Table IV.11: High-Water Alerts at Equal Recall (H4), 2024
+Table IV.12: Events Detected at 1, 3 and 6 Hours, 2024
+Table IV.13: Walk-Forward RMSE (m) at 1, 3 and 6 Hours
+Table IV.14: Ablation Results — Change in Test RMSE (m) against the Proposed Model, 2024
+Table IV.15: Weighted-Loss Variant vs Proposed Model, 2024
+Table IV.16: Flood-Risk Events (≥ 12.00 m) in the 2024 Test Season That Could Be Scored
+Table IV.17: Case Study Summary at 1, 3 and 6 Hours
+Table IV.18: Alert Levels Compared with the Aviles Records, 1 June to 15 July 2024</div>
+</div></div>
+
+<!-- ================= 2 CHAPTER III ================= -->
+<h2>2. Chapter III</h2>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>Typo in Figure III.1</b><span class="loc">p. 51, "Tabular input" box</span></div>
+<p>The figure is an image, so edit it in the diagram file it was drawn in and export it again.</p>
+<div class="lbl">Find</div><div class="find">redicted tide at t+1…t+6</div>
+<div class="lbl">Replace with</div><div class="rep">predicted tide at t+1…t+6</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>Learning rate in Table III.3</b><span class="loc">p. 52, "Training" row</span></div>
+<p>The text on p. 53 says the first grid stage used 0.001.</p>
+<div class="lbl">Find</div><div class="find">learning rate 0.00, 0.0005 or 0.0001</div>
+<div class="lbl">Replace with</div><div class="rep">learning rate 0.001, 0.0005 or 0.0001</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-opt">Optional</span><b>Conflict-of-interest bullet in III.G</b><span class="loc">p. 71, after the "Use of AI tools" bullet</span></div>
+<p>Form 4.2 asks whether the protocol discloses a conflict of interest, and the thesis currently says nothing about it. Add this only if the second sentence is true. It fits on p. 71 and moves nothing else.</p>
+<div class="lbl">Add</div><div class="rep">●	Conflict of interest. The researchers declare no conflict of interest. The MMDA and PAGASA provided data only and had no role in the analysis, the results or the writing of this study.</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-opt">Optional</span><b>Data-storage and disposal bullet in III.G</b><span class="loc">p. 71, after the bullet above</span></div>
+<p>Form 4.2 asks about storage and <i>disposal</i> of data, and the thesis does not mention disposal. Fill in the bracket with what you will actually do.</p>
+<div class="lbl">Add</div><div class="rep">●	Data storage and disposal. The original MMDA and PAGASA files were kept only by the research team and were not shared outside the team and the adviser. After the thesis is approved, they will be [deleted / returned to the agencies / archived as the Department requires].</div>
+</div></div>
+
+<!-- ================= 3 CHAPTER IV NUMBERS ================= -->
+<h2>3. Chapter IV: wrong numbers</h2>
+<p class="sub">Each value below was checked against the results files.</p>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>Table IV.4, rainfall p-value</b><span class="loc">p. 81, Rainfall row, "p-value" column</span></div>
+<p>The "8" of the superscript was lost. The results file has 6.13 × 10⁻⁴⁸.</p>
+<div class="lbl">Find</div><div class="find">6.1 × 10⁻⁴</div>
+<div class="lbl">Replace with</div><div class="rep">6.1 × 10⁻⁴⁸</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>Table IV.8, standalone LSTM R² at 3 h</b><span class="loc">p. 86, Standalone LSTM row, "R² 3 h" column</span></div>
+<div class="lbl">Find</div><div class="find">0.847</div>
+<div class="lbl">Replace with</div><div class="rep">0.947</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>Table IV.10, KNN classifier (24-h window), 3 h</b><span class="loc">p. 89</span></div>
+<p>The KNN cells were copied from the wrong lead time.</p>
+<div class="lbl">Find</div><div class="find">0.78 (0.89, 0.69; 35, 120)   ← the 3 h cell only; keep the 1 h cell</div>
+<div class="lbl">Replace with</div><div class="rep">0.78 (0.83, 0.74; 61, 102)</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>Table IV.10, KNN classifier (24-h window), 6 h</b><span class="loc">p. 89</span></div>
+<div class="lbl">Find</div><div class="find">0.78 (0.83, 0.74; 61, 102)   ← the 6 h cell</div>
+<div class="lbl">Replace with</div><div class="rep">0.76 (0.85, 0.69; 49, 123)</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>Table IV.10, KNN classifier (current hour), 6 h</b><span class="loc">p. 89</span></div>
+<div class="lbl">Find</div><div class="find">0.66 (0.88, 0.53; 28, 183)   ← the 6 h cell only; keep the 3 h cell</div>
+<div class="lbl">Replace with</div><div class="rep">0.57 (0.86, 0.42; 27, 226)</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>Table IV.11, PR-AUC at 5 h against Logistic Regression</b><span class="loc">p. 90, Logistic Regression 5 h row</span></div>
+<p>The KNN row at 5 h (p. 91) already shows the correct 0.908.</p>
+<div class="lbl">Find</div><div class="find">0.988 /
+0.900</div>
+<div class="lbl">Replace with</div><div class="rep">0.908 /
+0.900</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>Table IV.13, rounding</b><span class="loc">p. 93, 2023 fold, Tide + persisted residual, 6 h</span></div>
+<p>The exact value is 0.12517.</p>
+<div class="lbl">Find</div><div class="find">0.1253</div>
+<div class="lbl">Replace with</div><div class="rep">0.1252</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>Table IV.15, RMSE at high-water hours, 1 h</b><span class="loc">p. 96, "RMSE at high-water hours (m)" row</span></div>
+<p>The cell repeats the overall RMSE from the row above.</p>
+<div class="lbl">Find</div><div class="find">0.051 → 0.053   ← in the "RMSE at high-water hours" row</div>
+<div class="lbl">Replace with</div><div class="rep">0.081 → 0.080</div>
+</div></div>
+
+<!-- ================= 4 CHAPTER IV LABELS ================= -->
+<h2>4. Chapter IV: numbering and captions</h2>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>Duplicate table number</b><span class="loc">p. 81, caption under the sensitivity table</span></div>
+<p>The text on p. 80 and p. 100 already calls this table IV.3.</p>
+<div class="lbl">Find</div><div class="find">Table IV.2: Flood-Risk Level under Other Definitions of Drainage Stress (Training Seasons)</div>
+<div class="lbl">Replace with</div><div class="rep">Table IV.3: Flood-Risk Level under Other Definitions of Drainage Stress (Training Seasons)</div>
+<p class="why">In the same table, "≥ 2 Aviles pump running" and "≥ 3 Aviles pump running" should say "pumps".</p>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>Figures out of order</b><span class="loc">pp. 92–98</span></div>
+<p>In page order the figures currently run IV.1, IV.2, IV.3, IV.5, IV.6, IV.4. Renumber the captions and the text that refers to them.</p>
+<div class="tw"><table>
+<tr><th>Where</th><th>Find</th><th>Replace with</th></tr>
+<tr><td>p. 94, caption</td><td>Figure IV.5: Walk-Forward RMSE by Evaluation Year</td><td><b>Figure IV.4</b>: Walk-Forward RMSE by Evaluation Year</td></tr>
+<tr><td>p. 92, text</td><td>Table IV.13 and Figure IV.5</td><td>Table IV.13 and <b>Figure IV.4</b></td></tr>
+<tr><td>p. 96, caption</td><td>Figure IV.6: Ablation Results, Change in RMSE against the Proposed Model</td><td><b>Figure IV.5</b>: Ablation Results, Change in RMSE against the Proposed Model</td></tr>
+<tr><td>p. 94, text</td><td>Table IV.14 and Figure IV.6</td><td>Table IV.14 and <b>Figure IV.5</b></td></tr>
+<tr><td>p. 98, caption</td><td>Figure IV.4: Observed Level and Forecasts…</td><td><b>Figure IV.6</b>: Observed Level and Forecasts…</td></tr>
+<tr><td>p. 97, text</td><td>(Figure IV.4)</td><td>(<b>Figure IV.6</b>)</td></tr>
+</table></div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-fmt">Format</span><b>Move Table IV.18</b><span class="loc">pp. 98–99</span></div>
+<p>Table IV.18 sits before the heading "10. Comparison with the 2024 Aviles records". Move it after the paragraph in section 10 that discusses it.</p>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>Explain the asterisks in Table IV.14</b><span class="loc">p. 95, under the table</span></div>
+<div class="lbl">Add as a note under the table</div>
+<div class="rep">* Change larger than one standard deviation of the proposed model's RMSE over the same three seeds. The last column counts the lead times at which the variant was significantly worse (Diebold–Mariano test, Holm-adjusted).</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-con">Consistency</span><b>Say which seed Table IV.17 uses</b><span class="loc">p. 98, caption</span></div>
+<p>Table IV.17 shows the proposed model detecting 9 of 11 events at 1 hour, while Table IV.12 shows 8.4. Table IV.12 is the mean over seeds; Table IV.17 uses one seed.</p>
+<div class="lbl">Add to the end of the caption</div>
+<div class="rep">Neural models: the seed with the median validation RMSE.</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-con">Consistency</span><b>Figure IV.3 draws lines across data gaps</b><span class="loc">p. 88, caption</span></div>
+<div class="lbl">Add to the end of the caption</div>
+<div class="rep">Straight lines join the points on either side of gaps in the record.</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-fmt">Format</span><b>Table captions: above, not below</b><span class="loc">all Chapter IV tables</span></div>
+<p>In Chapters II and III, table captions sit <i>above</i> the table. In Chapter IV they sit below. Move every "Table IV.x" caption above its table. Figure captions stay below, as they are now.</p>
+</div></div>
+
+<!-- ================= 5 WORDING ================= -->
+<h2>5. Chapters IV and V: statements that don't match the results</h2>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-con">Consistency</span><b>Gate codes are never defined</b><span class="loc">p. 72, end of the second paragraph of IV.A</span></div>
+<p>"G11", "G12", "G16" and so on appear in Module 5, Table IV.5 and Figure IV.1, but Chapter III never introduces them. Add this after "…so that no later module could run on missing or faulty inputs."</p>
+<div class="lbl">Add</div>
+<div class="rep">These checks were numbered G0 to G20; those named in this chapter are G11 (tide input form), G12 (output form), G13 (training device), G14 (repeatability), G15 (number of seeds), G16 (persistence check), G17 (settings frozen), G18 (test season opened) and G19 (grid-edge check).</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-con">Consistency</span><b>IV.E, Granger paragraph</b><span class="loc">p. 100, "Granger selection (H2)"</span></div>
+<p>The no-rainfall ablation exceeded seed noise at 2 hours (Table IV.14), so "within seed noise" is not accurate.</p>
+<div class="lbl">Find</div><div class="find">and the ablation without rainfall was within seed noise.</div>
+<div class="lbl">Replace with</div><div class="rep">and the ablation without rainfall was not significantly different from the full model at any lead time.</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-con">Consistency</span><b>V.A, H2 paragraph</b><span class="loc">p. 104</span></div>
+<p>The no-Granger ablation exceeded seed noise at 2, 5 and 6 hours (Table IV.14).</p>
+<div class="lbl">Find</div><div class="find">and the ablations without rainfall or without Granger selection stayed within seed-to-seed variation, in line with Le et al. (2023).</div>
+<div class="lbl">Replace with</div><div class="rep">and the ablations without rainfall or without Granger selection were not significantly different from the full model at any lead time, in line with Le et al. (2023).</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-con">Consistency</span><b>V.B, answer (4)</b><span class="loc">p. 106</span></div>
+<p>The proposed model beat the KNN regressor only at 1 and 2 hours, and the KNN classifier only at 1 to 5 hours.</p>
+<div class="lbl">Find</div><div class="find">and the K-Nearest Neighbors models,</div>
+<div class="lbl">Replace with</div><div class="rep">and the K-Nearest Neighbors models (the regressor at 1 and 2 hours and the classifier at 1 to 5 hours),</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-con">Consistency</span><b>V.B, "departures from the plan"</b><span class="loc">p. 107</span></div>
+<p>Chapter III presents three seeds as a rule set in advance (p. 53), so calling it a departure from the plan contradicts it.</p>
+<div class="lbl">Find</div><div class="find">Two departures from the plan were recorded: the walk-forward and ablation runs used three seeds instead of five because of the run-time limit, and one 2024 flood-risk event could not be scored because of missing Pandacan readings.</div>
+<div class="lbl">Replace with</div><div class="rep">Two limits on the planned analyses were recorded: the walk-forward and ablation runs used three seeds instead of five, under the run-time rule set in advance (Chapter III), and one 2024 flood-risk event could not be scored because of missing Pandacan readings.</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-con">Consistency</span><b>V.C, Recommendation 6: undefined abbreviation</b><span class="loc">p. 109</span></div>
+<div class="lbl">Find</div><div class="find">MMDA or the Manila DRRMO</div>
+<div class="lbl">Replace with</div><div class="rep">MMDA or the Manila City Disaster Risk Reduction and Management Office</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>V.C, Recommendation 8: spelling</b><span class="loc">p. 109</span></div>
+<div class="lbl">Find</div><div class="find">11 scoreable flood-risk events</div>
+<div class="lbl">Replace with</div><div class="rep">11 scorable flood-risk events</div>
+</div></div>
+
+<!-- ================= 6 FORMAT ================= -->
+<h2>6. Formatting across Chapters IV–V</h2>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-fmt">Format</span><b>Chapter IV heading</b><span class="loc">p. 72</span></div>
+<p>Match "Chapter I The Problem and Its Background": bold, centered, no dash, not all capitals.</p>
+<div class="lbl">Find</div><div class="find">CHAPTER IV — Presentation and Analysis of Data</div>
+<div class="lbl">Replace with</div><div class="rep">Chapter IV Presentation and Analysis of Data</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-fmt">Format</span><b>Chapter V heading alignment</b><span class="loc">p. 104</span></div>
+<p>"Chapter V Summary, Conclusions and Recommendations" is left-aligned. Center it like the other chapter headings.</p>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-fmt">Format</span><b>Two spaces between sentences</b><span class="loc">pp. 72–109</span></div>
+<p>Chapters I–III and the template use two spaces after each sentence; Chapters IV–V use one. Fix this in Chapters IV–V only, so the earlier chapters are not touched twice.</p>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-opt">Optional</span><b>Code names in figure legends</b><span class="loc">Figures IV.2, IV.3, IV.5, IV.6</span></div>
+<p>The legends use internal names: <code>hybrid</code>, <code>tide_resid</code>, <code>knn</code>, <code>main hybrid</code>, <code>Weighted loss (D20)</code>. The figures can be redrawn with plain labels ("Proposed model", "Tide + persisted residual", "Weighted loss"). Ask for the redraw if you want it.</p>
+</div></div>
+
+<!-- ================= 7 APPENDIX ================= -->
+<h2>7. Appendix H</h2>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>Typo in test_parsers.py row</b><span class="loc">p. 126</span></div>
+<div class="lbl">Find</div><div class="find">pumping-station files are read correcntly,</div>
+<div class="lbl">Replace with</div><div class="rep">pumping-station files are read correctly,</div>
+</div></div>
+
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-err">Error</span><b>Typo in test_link.py row</b><span class="loc">p. 126</span></div>
+<div class="lbl">Find</div><div class="find">The Phase 2 statosctocs:</div>
+<div class="lbl">Replace with</div><div class="rep">The Phase 2 statistics:</div>
+</div></div>
+
+<!-- ================= 8 NOT CHECKED ================= -->
+<h2>8. Not checked</h2>
+<div class="item"><input type="checkbox"><div class="body">
+<div class="head"><span class="tag t-opt">Optional</span><b>New DPWH and MMDA (2017) reference</b><span class="loc">p. 19–20 and References p. 112</span></div>
+<p>This source was added after the earlier checks. Confirm that the sentence on p. 20 ("Metro Manila's pumping stations matter most at high tide or when the receiving rivers are high") matches what the document says.</p>
+</div></div>
+
+<p class="why" style="margin-top:28px">Your ticks are saved in this browser only.</p>
+</main>
+
+<script>
+(function(){
+  var KEY='thesis-revision-checklist-v1';
+  var boxes=[].slice.call(document.querySelectorAll('.item input[type=checkbox]'));
+  var state={};
+  try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){state={};}
+  var hide=document.getElementById('hide');
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+  function render(){
+    var done=0;
+    boxes.forEach(function(b,i){
+      var item=b.closest('.item');
+      item.classList.toggle('done',b.checked);
+      item.style.display=(hide.checked&&b.checked)?'none':'';
+      if(b.checked)done++;
+    });
+    document.getElementById('progfill').style.width=(100*done/boxes.length)+'%';
+    document.getElementById('progtxt').textContent=done+' of '+boxes.length+' done';
+  }
+  boxes.forEach(function(b,i){
+    b.checked=!!state[i];
+    b.setAttribute('aria-label','Mark item '+(i+1)+' as done');
+    b.addEventListener('change',function(){state[i]=b.checked;save();render();});
+  });
+  hide.checked=!!state.hide;
+  hide.addEventListener('change',function(){state.hide=hide.checked;save();render();});
+  document.querySelectorAll('.rep').forEach(function(el){
+    var t=el.textContent;
+    var btn=document.createElement('button');
+    btn.className='copy';btn.type='button';btn.textContent='Copy';
+    btn.addEventListener('click',function(){
+      var done=function(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy';},1200);};
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(t).then(done,function(){fallback();});
+      }else{fallback();}
+      function fallback(){
+        var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();
+        try{document.execCommand('copy');done();}catch(e){}
+        document.body.removeChild(ta);
+      }
+    });
+    el.appendChild(btn);
+  });
+  render();
+})();
+</script>
+</body>
+</html>
